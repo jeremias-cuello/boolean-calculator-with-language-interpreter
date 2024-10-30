@@ -1,5 +1,5 @@
 import { Interpreter } from './Interpreter';
-import { Operating } from './Operating';
+import { Operant } from './Operant';
 import { Operator } from './Operator';
 
 class App {
@@ -11,10 +11,10 @@ class App {
         const conjunction = new Operator('.', 2, 1);
         const negation = new Operator('~', 1, 2);
 
-        const varA = new Operating('A');
-        const varB = new Operating('B');
-        const varC = new Operating('C');
-        const varD = new Operating('D');
+        const varA = new Operant('A');
+        const varB = new Operant('B');
+        const varC = new Operant('C');
+        const varD = new Operant('D');
 
         // adding operators
         interpreter.addToken(disjunction);

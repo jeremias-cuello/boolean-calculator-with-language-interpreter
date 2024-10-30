@@ -1,13 +1,13 @@
 import { Token } from "./Token";
 
-class Operating extends Token{
+class Operant extends Token{
     public constructor(symbol:string){
         super(symbol);
     }
 
     public override toString() : string {
-        return `Operating: { ${super.toString()} }`;
+        return `Operant: { ${super.toString()} }`;
     }
 }
 
-export { Operating };
+export { Operant };

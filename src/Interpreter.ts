@@ -1,4 +1,4 @@
-import { Operating } from "./Operating";
+import { Operant } from "./Operant";
 import { Operator } from "./Operator";
 import { Token } from "./Token";
 
@@ -28,7 +28,7 @@ class InterpreterSingleton{
         const print = (b:Boolean) => b ? 'operando' : 'operador';
 
         for (const token of this.tokens) {
-            console.log(print(token instanceof Operating), token.toString());
+            console.log(print(token instanceof Operant), token.toString());
         }
 
         return tokens;
