@@ -1,0 +1,4 @@
+node_modules/
+# carpeta de compilados TypeScript a JavaScript
+dist/
+package-lock.json
