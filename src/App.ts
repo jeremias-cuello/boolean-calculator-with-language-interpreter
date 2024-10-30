@@ -3,7 +3,7 @@ import { Operant } from './Operant';
 import { Operator } from './Operator';
 
 class App {
-    public static main() : void {
+    public static main(): void {
         const expression: string = "D . ^ \t\r\n(A + B) ";
         const interpreter = Interpreter.getInstancia(expression);
 
