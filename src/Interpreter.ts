@@ -1,7 +1,12 @@
+import { Operating } from "./Operating";
+import { Operator } from "./Operator";
+import { Token } from "./Token";
+
 class InterpreterSingleton{
 
     private static instance : InterpreterSingleton;
     private expression : string = "";
+    private tokens : Token[] = [];
 
     private constructor(expression : string) {
         this.Expression = expression;
@@ -9,21 +14,33 @@ class InterpreterSingleton{
 
     public static getInstancia(expression: string) : InterpreterSingleton {
 
-        console.log("Antes");
-        console.log("Interpreter.instance", InterpreterSingleton.instance);
-
         if(InterpreterSingleton.instance == null){
             InterpreterSingleton.instance = new InterpreterSingleton(expression);
-            console.log('se hace por primera vez');
         }
-        console.log("Despues");
-        console.log("Interpreter.instance", InterpreterSingleton.instance);
 
         return InterpreterSingleton.instance;
     }
 
+    public tokenization() : Token[]{
+        let tokens : Token[] = [];
+
+        // aux
+        const print = (b:Boolean) => b ? 'operando' : 'operador';
+
+        for (const token of this.tokens) {
+            console.log(print(token instanceof Operating), token.toString());
+        }
+
+        return tokens;
+    }
+
+    public addToken(t : Token) : void {
+        this.tokens.push(t);
+    }
+
+    //#region set and get Expression
     /**
-     * @description saca los espacios
+     * @description remove spaces
      */
     public set Expression(v : string) {
         this.expression = v.replace(/\s+/g, "");
@@ -32,6 +49,7 @@ class InterpreterSingleton{
     public get Expression() : string {
         return this.expression;
     }
+    //#endregion
 }
 
 export { InterpreterSingleton as Interpreter };
