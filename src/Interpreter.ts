@@ -1,9 +1,25 @@
-class Interpreter{
+class InterpreterSingleton{
 
+    private static instance : InterpreterSingleton;
     private expression : string = "";
 
-    public constructor(expression: string) {
+    private constructor(expression : string) {
         this.Expression = expression;
+    }
+
+    public static getInstancia(expression: string) : InterpreterSingleton {
+
+        console.log("Antes");
+        console.log("Interpreter.instance", InterpreterSingleton.instance);
+
+        if(InterpreterSingleton.instance == null){
+            InterpreterSingleton.instance = new InterpreterSingleton(expression);
+            console.log('se hace por primera vez');
+        }
+        console.log("Despues");
+        console.log("Interpreter.instance", InterpreterSingleton.instance);
+
+        return InterpreterSingleton.instance;
     }
 
     /**
@@ -18,4 +34,4 @@ class Interpreter{
     }
 }
 
-export { Interpreter };
+export { InterpreterSingleton as Interpreter };
