@@ -1,13 +1,18 @@
 import { Token } from "./Token";
 
 class Operant extends Token {
-    public constructor(symbol: string) {
+
+    public Value: boolean;
+
+    public constructor(symbol: string, value: boolean) {
         super(symbol);
+        this.Value = value;
     }
 
     public override toString(): string {
         return `Operant: { ${super.toString()} }`;
     }
+
 }
 
 export { Operant };

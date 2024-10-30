@@ -1,6 +1,7 @@
+import { Operant } from "./Operant";
 import { Token } from "./Token";
 
-class Operator extends Token {
+abstract class Operator extends Token /* implements IOperatorBinary, IOperatorUnary */{
 
     private priority: number = 0;
     private quantityOperands: number = 0;
@@ -41,10 +42,13 @@ class Operator extends Token {
     }
 
     //#endregion
-
+    //#region toString
     public override toString(): string {
         return `Operator: { ${super.toString()}, Priority: ${this.Priority}, QuantityOperands: ${this.QuantityOperands} }`;
     }
+    //#endregion
+
+    abstract evaluate(firstOperant: Operant | undefined, secondOperant?: Operant | undefined): Operant;
 }
 
 export { Operator };

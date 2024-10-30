@@ -1,20 +1,28 @@
 import { Interpreter } from './Interpreter';
 import { Operant } from './Operant';
-import { Operator } from './Operator';
+import { ConjunctionOperator } from './ConjunctionOperador';
+import { DisyunctionOperator } from './DisyunctionOperator';
+import { NegationOperator } from './NegationOperator';
+import { GrouperEnd } from './GrouperEnd';
+import { GrouperStart } from './GrouperStart';
 
 class App {
     public static main(): void {
-        const expression: string = "D . ^ \t\r\n(A + B) ";
+
+        const disjunction = new DisyunctionOperator('+', 2, 1);
+        const conjunction = new ConjunctionOperator('.', 2, 2);
+        const negation = new NegationOperator('~', 1, 3);
+
+        const varA = new Operant('A', false);
+        const varB = new Operant('B', true);
+        const varC = new Operant('C', false);
+        const varD = new Operant('D', true);
+
+        const parenthesisStart = new GrouperStart('(');
+        const parenthesisEnd = new GrouperEnd(')');
+
+        const expression: string = "D . ~ \t\r\n(A + B) + C + C";
         const interpreter = Interpreter.getInstancia(expression);
-
-        const disjunction = new Operator('+', 2, 1);
-        const conjunction = new Operator('.', 2, 1);
-        const negation = new Operator('~', 1, 2);
-
-        const varA = new Operant('A');
-        const varB = new Operant('B');
-        const varC = new Operant('C');
-        const varD = new Operant('D');
 
         // adding operators
         interpreter.addToken(disjunction);
@@ -27,7 +35,12 @@ class App {
         interpreter.addToken(varC);
         interpreter.addToken(varD);
 
-        interpreter.tokenization();
+        // adding grouper
+        interpreter.addToken(parenthesisStart);
+        interpreter.addToken(parenthesisEnd);
+
+        // use
+        interpreter.validate();
     }
 }
 
