@@ -1,5 +1,5 @@
 import { Operant } from "./Operant";
-import { IStack } from "./Stack";
+import { IStack } from "./IStack";
 
 class StackOperantSingleton implements IStack<Operant>{
     private operants: Operant[] = [];
