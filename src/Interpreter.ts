@@ -10,14 +10,12 @@ class InterpreterSingleton {
     private expression: string = "";
     private tokens: Token[] = [];
 
-    private constructor(expression: string) {
-        this.Expression = expression;
-    }
+    private constructor() { }
 
-    public static getInstancia(expression: string): InterpreterSingleton {
+    public static getInstancia(): InterpreterSingleton {
 
         if (InterpreterSingleton.instance == null) {
-            InterpreterSingleton.instance = new InterpreterSingleton(expression);
+            InterpreterSingleton.instance = new InterpreterSingleton();
         }
 
         return InterpreterSingleton.instance;
@@ -112,11 +110,8 @@ class InterpreterSingleton {
     }
 
     //#region set and get Expression
-    /**
-     * @description remove spaces
-     */
     public set Expression(v: string) {
-        this.expression = v.replace(/\s+/g, "");
+        this.expression = v.replace(/\s+/g, ""); // remove spaces
     }
 
     public get Expression(): string {

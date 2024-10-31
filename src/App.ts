@@ -9,6 +9,8 @@ import { GrouperStart } from './GrouperStart';
 class App {
     public static main(): void {
 
+        const interpreter = Interpreter.getInstancia();
+
         const disjunction = new DisyunctionOperator('+', 2, 1);
         const conjunction = new ConjunctionOperator('.', 2, 2);
         const negation = new NegationOperator('~', 1, 3);
@@ -20,9 +22,6 @@ class App {
 
         const parenthesisStart = new GrouperStart('(');
         const parenthesisEnd = new GrouperEnd(')');
-
-        const expression: string = "D . ~ \t\r\n(A + B) + C + C";
-        const interpreter = Interpreter.getInstancia(expression);
 
         // adding operators
         interpreter.addToken(disjunction);
@@ -40,6 +39,8 @@ class App {
         interpreter.addToken(parenthesisEnd);
 
         // use
+        const expression: string = "D . ~ \t\r\n(A + B) + C + C";
+        interpreter.Expression = expression;
         interpreter.validate();
     }
 }
