@@ -9,6 +9,7 @@ class InterpreterSingleton {
     private static instance: InterpreterSingleton;
     private expression: string = "";
     private tokens: Token[] = [];
+    private expressionTokenized: Token[] = [];
     private stackOperants: StackOperant = StackOperant.getInstance();
     private stackOperators: StackOperator = StackOperator.getInstance();
 
@@ -23,7 +24,7 @@ class InterpreterSingleton {
         return InterpreterSingleton.instance;
     }
 
-    public validate(): void {
+    public tokenization(): void {
         // console.group("validate"); // DEBUG
 
         let validated: boolean = false;
@@ -38,6 +39,7 @@ class InterpreterSingleton {
                 // console.log("t = ", t.Symbol); // DEBUG
                 if (c === t.Symbol) {
                     validated = true;
+                    this.expressionTokenized.push(t);
                 }
             }
 
@@ -45,6 +47,8 @@ class InterpreterSingleton {
         }
 
         // console.groupEnd(); // DEBUG
+        console.log("this.expressionTokenized");
+        console.log(this.expressionTokenized);
 
     }
 
