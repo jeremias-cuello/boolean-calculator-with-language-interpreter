@@ -39,7 +39,17 @@ class App {
         interpreter.addToken(parenthesisEnd);
 
         // use
-        const expression: string = "D . ~ \t\r\n(A + B) + C + C";
+        // A + B . C + D <equivalente> A + ( B . C ) + D porque . tiene mayor prioridad que +
+        // const expression: string = "A + B . C + D . A + B . D . A . C + A";
+                             //    "A +   1   + D . A + B . D . A . C + A";
+                             //    "   2      + D . A + B . D . A . C + A";
+                             //    "   2      +   3   + B . D . A . C + A";
+                             //    "          4       + B . D . A . C + A"; // vacia la pila de operadores
+                             //    "          4       +   5   . A . C + A";
+                             //    "          4       +     6     . C + A";
+                             //    "          4       +        7      + A";
+
+        const expression: string = "A + B . C ~ D . A + C";
         interpreter.Expression = expression;
         interpreter.tokenization();
         interpreter.parse();

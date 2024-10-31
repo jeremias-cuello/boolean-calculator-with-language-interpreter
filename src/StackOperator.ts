@@ -43,6 +43,10 @@ class StackOperatorSingleton implements IStack<Operator>{
     public isEmpty(): boolean {
         return this.operators.length == 0;
     }
+
+    public toString() : string {
+        return `${this.operators.map(o => o.Symbol)}`
+    }
 }
 
 export { StackOperatorSingleton as StackOperator };

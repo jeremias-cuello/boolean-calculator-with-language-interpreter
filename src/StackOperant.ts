@@ -29,6 +29,10 @@ class StackOperantSingleton implements IStack<Operant>{
 
         return op;
     }
+
+    public toString() : string {
+        return `${this.operants.map(o => o.Symbol)}`
+    }
 }
 
 export { StackOperantSingleton as StackOperant };

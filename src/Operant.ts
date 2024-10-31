@@ -10,7 +10,7 @@ class Operant extends Token {
     }
 
     public override toString(): string {
-        return `Operant: { ${super.toString()} }`;
+        return `Operant: { ${super.toString()}, value: ${this.Value} }`;
     }
 
 }
