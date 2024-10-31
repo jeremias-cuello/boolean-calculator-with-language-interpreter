@@ -1,8 +1,18 @@
 import { Operator } from "./Operator";
 import { Stack } from "./Stack";
 
-class StackOperator implements Stack<Operator>{
+class StackOperatorSingleton implements Stack<Operator>{
     private operators: Operator[] = [];
+    private static instance: StackOperatorSingleton;
+
+    private constructor() { }
+    public static getInstance(){
+        if(StackOperatorSingleton.instance == null){
+            StackOperatorSingleton.instance = new StackOperatorSingleton();
+        }
+
+        return StackOperatorSingleton.instance;
+    }
 
     public push(operator: Operator): void {
         this.operators.push(operator);
@@ -35,4 +45,4 @@ class StackOperator implements Stack<Operator>{
     }
 }
 
-export { StackOperator };
+export { StackOperatorSingleton as StackOperator };

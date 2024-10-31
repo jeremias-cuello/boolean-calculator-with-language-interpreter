@@ -9,7 +9,8 @@ class InterpreterSingleton {
     private static instance: InterpreterSingleton;
     private expression: string = "";
     private tokens: Token[] = [];
-    private stackOperants = StackOperantSingleton.getInstance();
+    private stackOperants: StackOperantSingleton = StackOperantSingleton.getInstance();
+    private stackOperators: StackOperator = StackOperator.getInstance();
 
     private constructor() { }
 
@@ -48,15 +49,14 @@ class InterpreterSingleton {
     }
 
     public parse(): void {
-        const stackOperators = new StackOperator();
 
         console.log("stackOperants = ", this.stackOperants);
-        console.log("stackOperators = ", stackOperators);
+        console.log("stackOperators = ", this.stackOperators);
 
         for (const token of this.tokens) {
             console.group('for');
             console.log("stackOperants = ", this.stackOperants);
-            console.log("stackOperators = ", stackOperators);
+            console.log("stackOperators = ", this.stackOperators);
             console.log("token = ", token);
 
             if (token instanceof Operant) {
@@ -65,17 +65,17 @@ class InterpreterSingleton {
             }
             else if (token instanceof Operator) {
                 console.group("IsOperador");
-                const operatorBefore = stackOperators.peek();
+                const operatorBefore = this.stackOperators.peek();
                 const operatorCurrent = token;
 
                 console.log("operatorBefore", operatorBefore);
 
                 // Mientras la pila de operadores no esté vacía y el operador en la parte superior de la pila tenga mayor o igual prioridad que el operador actual
-                while (!stackOperators.isEmpty() && operatorBefore.QuantityOperands >= operatorCurrent.QuantityOperands) {
+                while (!this.stackOperators.isEmpty() && operatorBefore.QuantityOperands >= operatorCurrent.QuantityOperands) {
                     let result: Operant = new Operant("", false);
 
                     // Desapila el operador de la pila de operadores
-                    const operator = stackOperators.pop();
+                    const operator = this.stackOperators.pop();
 
                     // Desapila uno o dos operandos de la pila de operandos (según si el operador es unario o binario)
                     // Luego aplica el operador anterior guardando el resultado
@@ -94,7 +94,7 @@ class InterpreterSingleton {
                 }
 
                 // Push at Stack of Operators to current operator
-                stackOperators.push(operatorCurrent);
+                this.stackOperators.push(operatorCurrent);
 
                 console.groupEnd();
             }
