@@ -1,7 +1,7 @@
 import { Operant } from "./Operant";
-import { Stack } from "./Stack";
+import { IStack } from "./Stack";
 
-class StackOperantSingleton implements Stack<Operant>{
+class StackOperantSingleton implements IStack<Operant>{
     private operants: Operant[] = [];
 
     private static instance:StackOperantSingleton;

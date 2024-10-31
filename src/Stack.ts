@@ -1,6 +1,6 @@
-interface Stack<T>{
+interface IStack<T>{
     pop(): T;
     push(element: T): void;
 }
 
-export { Stack }
+export { IStack }
