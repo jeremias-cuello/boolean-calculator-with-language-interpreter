@@ -31,4 +31,4 @@ class StackOperantSingleton implements Stack<Operant>{
     }
 }
 
-export { StackOperantSingleton };
+export { StackOperantSingleton as StackOperant };

@@ -1,4 +1,4 @@
-import { StackOperantSingleton } from "./StackOperantSingleton";
+import { StackOperant } from "./StackOperant";
 import { StackOperator } from "./StackOperator";
 import { Operant } from "./Operant";
 import { Operator } from "./Operator";
@@ -9,7 +9,7 @@ class InterpreterSingleton {
     private static instance: InterpreterSingleton;
     private expression: string = "";
     private tokens: Token[] = [];
-    private stackOperants: StackOperantSingleton = StackOperantSingleton.getInstance();
+    private stackOperants: StackOperant = StackOperant.getInstance();
     private stackOperators: StackOperator = StackOperator.getInstance();
 
     private constructor() { }
