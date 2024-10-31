@@ -1,4 +1,4 @@
-import { StackOperantSingleton } from "./StackOperant";
+import { StackOperantSingleton } from "./StackOperantSingleton";
 import { StackOperator } from "./StackOperator";
 import { Operant } from "./Operant";
 import { Operator } from "./Operator";
