@@ -42,6 +42,7 @@ class App {
         const expression: string = "D . ~ \t\r\n(A + B) + C + C";
         interpreter.Expression = expression;
         interpreter.validate();
+        interpreter.parse();
     }
 }
 

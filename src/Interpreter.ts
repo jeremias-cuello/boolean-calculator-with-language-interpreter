@@ -1,4 +1,4 @@
-import { StackOperant } from "./StackOperant";
+import { StackOperantSingleton } from "./StackOperant";
 import { StackOperator } from "./StackOperator";
 import { Operant } from "./Operant";
 import { Operator } from "./Operator";
@@ -9,6 +9,7 @@ class InterpreterSingleton {
     private static instance: InterpreterSingleton;
     private expression: string = "";
     private tokens: Token[] = [];
+    private stackOperants = StackOperantSingleton.getInstance();
 
     private constructor() { }
 
@@ -47,21 +48,20 @@ class InterpreterSingleton {
     }
 
     public parse(): void {
-        const stackOperants = new StackOperant();
         const stackOperators = new StackOperator();
 
-        console.log("stackOperants = ", stackOperants);
+        console.log("stackOperants = ", this.stackOperants);
         console.log("stackOperators = ", stackOperators);
 
         for (const token of this.tokens) {
             console.group('for');
-            console.log("stackOperants = ", stackOperants);
+            console.log("stackOperants = ", this.stackOperants);
             console.log("stackOperators = ", stackOperators);
             console.log("token = ", token);
 
             if (token instanceof Operant) {
                 console.log("is operant");
-                stackOperants.push(token);
+                this.stackOperants.push(token);
             }
             else if (token instanceof Operator) {
                 console.group("IsOperador");
@@ -78,19 +78,19 @@ class InterpreterSingleton {
                     const operator = stackOperators.pop();
 
                     // Desapila uno o dos operandos de la pila de operandos (según si el operador es unario o binario)
-                    // Luego aplica el operador anterior y guarda el resultado en la pila de operandos
+                    // Luego aplica el operador anterior guardando el resultado
                     if (operator.QuantityOperands == 2) {
-                        const secondOperand = stackOperants.pop();
-                        const firstOperand = stackOperants.pop();
+                        const secondOperand = this.stackOperants.pop();
+                        const firstOperand = this.stackOperants.pop();
                         result = operator.evaluate(firstOperand, secondOperand);
                     }
                     else if (operator.QuantityOperands == 1) {
-                        const operand = stackOperants.pop();
+                        const operand = this.stackOperants.pop();
                         result = operator.evaluate(operand);
                     }
 
                     // Coloca el resultado en la pila de operandos
-                    stackOperants.push(result);
+                    this.stackOperants.push(result);
                 }
 
                 // Push at Stack of Operators to current operator
