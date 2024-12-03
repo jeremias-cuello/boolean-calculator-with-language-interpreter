@@ -24,7 +24,7 @@ class InterpreterSingleton {
         return InterpreterSingleton.instance;
     }
 
-    public tokenization(): void {
+    public tokenize(): void {
         // console.group("validate"); // DEBUG
 
         let validated: boolean = false;
@@ -36,8 +36,8 @@ class InterpreterSingleton {
 
             for (let j = 0; j < this.tokens.length && !validated; j++) {
                 const t = this.tokens[j];
-                // console.log("t = ", t.Symbol); // DEBUG
-                if (c === t.Symbol) {
+                // console.log("t = ", t.symbol); // DEBUG
+                if (c === t.symbol) {
                     validated = true;
                     this.expressionTokenized.push(t);
                 }
@@ -47,7 +47,7 @@ class InterpreterSingleton {
         }
 
         // console.log("this.expressionTokenized");  // DEBUG
-        // console.log(this.expressionTokenized.map(t => t.Symbol));  // DEBUG
+        // console.log(this.expressionTokenized.map(t => t.symbol));  // DEBUG
         // console.groupEnd(); // DEBUG
     }
 
@@ -60,7 +60,7 @@ class InterpreterSingleton {
         for (const token of this.expressionTokenized) {
             console.log("stackOperants = ", this.stackOperants.toString());
             console.log("stackOperators = ", this.stackOperators.toString());
-            console.log("token = ", token.Symbol);
+            console.log("token = ", token.symbol);
 
             if (token instanceof Operant) {
                 console.group("is operant");
@@ -74,31 +74,31 @@ class InterpreterSingleton {
                 // Mientras la pila de operadores no esté vacía y el operador en la parte superior de la pila tenga mayor o igual prioridad que el operador actual
                 while (
                     !this.stackOperators.isEmpty() &&
-                    this.stackOperators.peek().Priority >= opCurrent.Priority
+                    this.stackOperators.peek().priority >= opCurrent.priority
                 ) {
-                    console.group("while");
+                    console.group("pop-operator-stack");
                     let result: Operant = new Operant("q", false);
-
                     // Desapila el operador de la pila de operadores
                     const operator = this.stackOperators.pop();
 
                     // Desapila uno o dos operandos de la pila de operandos (según si el operador es unario o binario)
                     // Luego aplica el operador anterior guardando el resultado
-                    if (operator.QuantityOperands == 2) {
+                    if (operator.quantityOperands == 2) {
                         const secondOperand = this.stackOperants.pop();
                         const firstOperand = this.stackOperants.pop();
                         result = operator.evaluate(firstOperand, secondOperand);
-                        console.log(`${firstOperand.Symbol} ${operator.Symbol} ${secondOperand.Symbol}`);
-                        console.log(`${firstOperand.Value} ${operator.Symbol} ${secondOperand.Value}`);
-                        console.log(`result = ${result}`);
+
+                        console.log(`${firstOperand.symbol} ${operator.symbol} ${secondOperand.symbol}`); // DEBUG
+                        console.log(`${firstOperand.value} ${operator.symbol} ${secondOperand.value}`); // DEBUG
+                        console.log(`result = ${result}`); // DEBUG
                     }
-                    else if (operator.QuantityOperands == 1) {
+                    else if (operator.quantityOperands == 1) {
                         const operand = this.stackOperants.pop();
                         result = operator.evaluate(operand);
 
-                        console.log(`${operator.Symbol} ${operand.Symbol}`);
-                        console.log(`${operator.Symbol} ${operand.Value}`);
-                        console.log(`result = ${result}`);
+                        console.log(`${operator.symbol} ${operand.symbol}`); // DEBUG
+                        console.log(`${operator.symbol} ${operand.value}`); // DEBUG
+                        console.log(`result = ${result}`); // DEBUG
                     }
 
                     // Coloca el resultado en la pila de operandos
@@ -111,7 +111,8 @@ class InterpreterSingleton {
 
                 // Push at Stack of Operators to current operator
                 this.stackOperators.push(opCurrent);
-
+                console.log("stackOperants = ", this.stackOperants.toString());
+                console.log("stackOperators = ", this.stackOperators.toString());
                 console.groupEnd();
             }
             console.log("-----------------------------------");
@@ -121,6 +122,49 @@ class InterpreterSingleton {
         console.log("stackOperants = ", this.stackOperants.toString());
         console.log("stackOperators = ", this.stackOperators.toString());
         console.groupEnd(); // end for
+    }
+
+    public execute(): boolean {
+        while (!this.stackOperators.isEmpty()) {
+            console.group("execute");
+            let result: Operant = new Operant("q", false);
+            // Desapila el operador de la pila de operadores
+            const operator = this.stackOperators.pop();
+
+            // Desapila uno o dos operandos de la pila de operandos (según si el operador es unario o binario)
+            // Luego aplica el operador anterior guardando el resultado
+            if (operator.quantityOperands == 2) {
+                const secondOperand = this.stackOperants.pop();
+                const firstOperand = this.stackOperants.pop();
+                result = operator.evaluate(firstOperand, secondOperand);
+
+                console.log(`${firstOperand.symbol} ${operator.symbol} ${secondOperand.symbol}`); // DEBUG
+                console.log(`${firstOperand.value} ${operator.symbol} ${secondOperand.value}`); // DEBUG
+                console.log(`result = ${result}`); // DEBUG
+            }
+            else if (operator.quantityOperands == 1) {
+                const operand = this.stackOperants.pop();
+                result = operator.evaluate(operand);
+
+                console.log(`${operator.symbol} ${operand.symbol}`); // DEBUG
+                console.log(`${operator.symbol} ${operand.value}`); // DEBUG
+                console.log(`result = ${result}`); // DEBUG
+            }
+
+            // Coloca el resultado en la pila de operandos
+            this.stackOperants.push(result);
+
+            console.log("stackOperants = ", this.stackOperants.toString());
+            console.log("stackOperators = ", this.stackOperators.toString());
+            console.groupEnd();
+        }
+
+        const result = this.stackOperants.pop().value;
+
+        console.log("stackOperants = ", this.stackOperants.toString());
+        console.log("stackOperators = ", this.stackOperators.toString());
+
+        return result;
     }
 
     public addToken(t: Token): void {

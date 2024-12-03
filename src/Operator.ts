@@ -1,40 +1,52 @@
 import { Operant } from "./Operant";
 import { Token } from "./Token";
 
-abstract class Operator extends Token /* implements IOperatorBinary, IOperatorUnary */{
+abstract class Operator extends Token {
 
-    private priority: number = 0;
-    private quantityOperands: number = 0;
+    private _priority: number = 0;
+    private _quantityOperands: number = 0;
 
     public constructor(symbol: string, quantityOperands: number, priority: number) {
-        super(symbol);
-        this.QuantityOperands = quantityOperands;
-        this.Priority = priority;
+        super();
+        this.symbol = symbol;
+        this.quantityOperands = quantityOperands;
+        this.priority = priority;
+    }
+
+    /**
+     * DEV: validate symbol
+     */
+    public override set symbol(v: string) {
+        this._symbol = v;
+    }
+
+    public override get symbol() {
+        return this._symbol;
     }
 
     //#region set and get quantityOperands
-    public set QuantityOperands(v: number) {
+    public set quantityOperands(v: number) {
         if (v >= 1) {
-            this.quantityOperands = v;
+            this._quantityOperands = v;
         }
         else {
             throw new Error("quantity invalidated");
         }
     }
 
-    public get QuantityOperands(): number {
-        return this.quantityOperands;
+    public get quantityOperands(): number {
+        return this._quantityOperands;
     }
 
     //#endregion
     //#region set and get Priority
-    public get Priority(): number {
-        return this.priority;
+    public get priority(): number {
+        return this._priority;
     }
 
-    public set Priority(v: number) {
+    public set priority(v: number) {
         if (v >= 1) {
-            this.priority = v;
+            this._priority = v;
         }
         else {
             throw new Error("priority invalidated");
@@ -44,7 +56,7 @@ abstract class Operator extends Token /* implements IOperatorBinary, IOperatorUn
     //#endregion
     //#region toString
     public override toString(): string {
-        return `Operator: { ${super.toString()}, Priority: ${this.Priority}, QuantityOperands: ${this.QuantityOperands} }`;
+        return `Operator: { ${super.toString()}, Priority: ${this.priority}, QuantityOperands: ${this.quantityOperands} }`;
     }
     //#endregion
 

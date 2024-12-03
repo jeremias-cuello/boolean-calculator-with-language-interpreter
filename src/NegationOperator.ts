@@ -8,7 +8,7 @@ class NegationOperator extends Operator/*  implements IOperatorUnary  */{
 
     public override evaluate(operant: Operant): Operant {
 
-        const value: boolean = this.calculator.negation(operant.Value);
+        const value: boolean = this.calculator.negation(operant.value);
         const symbol = `${this.calculator.CounterOperandsAuxiliar}`;
 
         const result: Operant = new Operant(symbol, value);

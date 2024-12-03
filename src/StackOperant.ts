@@ -31,7 +31,7 @@ class StackOperantSingleton implements IStack<Operant>{
     }
 
     public toString() : string {
-        return `${this.operants.map(o => o.Symbol)}`
+        return `${this.operants.map(o => o.symbol)}`
     }
 }
 

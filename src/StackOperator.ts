@@ -1,13 +1,13 @@
 import { Operator } from "./Operator";
 import { IStack } from "./IStack";
 
-class StackOperatorSingleton implements IStack<Operator>{
+class StackOperatorSingleton implements IStack<Operator> {
     private operators: Operator[] = [];
     private static instance: StackOperatorSingleton;
 
     private constructor() { }
-    public static getInstance(){
-        if(StackOperatorSingleton.instance == null){
+    public static getInstance() {
+        if (StackOperatorSingleton.instance == null) {
             StackOperatorSingleton.instance = new StackOperatorSingleton();
         }
 
@@ -21,7 +21,7 @@ class StackOperatorSingleton implements IStack<Operator>{
     public pop(): Operator {
         const op = this.operators.pop();
 
-        if(typeof op === 'undefined'){
+        if (typeof op === 'undefined') {
             throw new Error("underflow");
         }
 
@@ -44,8 +44,8 @@ class StackOperatorSingleton implements IStack<Operator>{
         return this.operators.length == 0;
     }
 
-    public toString() : string {
-        return `${this.operators.map(o => o.Symbol)}`
+    public toString(): string {
+        return `${this.operators.map(o => o.symbol)}`;
     }
 }
 
