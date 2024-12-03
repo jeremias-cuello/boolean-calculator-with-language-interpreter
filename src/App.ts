@@ -20,8 +20,8 @@ class App {
         const varC = new Operant('C', false);
         const varD = new Operant('D', true);
 
-        // const parenthesisStart = new GrouperStart('(');
-        // const parenthesisEnd = new GrouperEnd(')');
+        const parenthesisStart = new GrouperStart('(');
+        const parenthesisEnd = new GrouperEnd(')');
 
         // adding operators
         interpreter.addToken(disjunction);
@@ -35,29 +35,27 @@ class App {
         interpreter.addToken(varD);
 
         // adding grouper
-        // interpreter.addToken(parenthesisStart);
-        // interpreter.addToken(parenthesisEnd);
+        interpreter.addToken(parenthesisStart);
+        interpreter.addToken(parenthesisEnd);
 
         // use
         // A + B . C + D <equivalente> A + ( B . C ) + D porque . tiene mayor prioridad que +
         const expression: string = "A + B . C + D . A + B . D . A . C + A . C . ~ D . A . B . C . ~ D";
         //    "A + B . C + D . A + B . D . A . C + A . C . ~ D . A . B . C . ~ D";
         //    "A +   1   + D . A + B . D . A . C + A . C . ~ D . A . B . C . ~ D";
-        //    "   2      + D . A + B . D . A . C + A . C . ~ D . A . B . C . ~ D";
-        //    "   2      +   3   + B . D . A . C + A . C . ~ D . A . B . C . ~ D";
+        //    "  2       + D . A + B . D . A . C + A . C . ~ D . A . B . C . ~ D";
+        //    "  2       +   3   + B . D . A . C + A . C . ~ D . A . B . C . ~ D";
         //    "          4       + B . D . A . C + A . C . ~ D . A . B . C . ~ D"; // vacia la pila de operadores
         //    "          4       +   5   . A . C + A . C . ~ D . A . B . C . ~ D";
-        //    "          4       +     6     . C + A . C . ~ D . A . B . C . ~ D";
-        //    "          4       +        7      + A . C . ~ D . A . B . C . ~ D";
+        //    "          4       +       6   . C + A . C . ~ D . A . B . C . ~ D";
+        //    "          4       +           7   + A . C . ~ D . A . B . C . ~ D";
         //    "                  8               + A . C . ~ D . A . B . C . ~ D";
         //    "                  8               +   9   . ~ D . A . B . C . ~ D";
-        //    "                  8               +   9   . ~ D . A . B . C . ~ D";
-        //    "                  8               +   9   .  10 . A . B . C . ~ D";
+        //    "                  8               +   9   . 10  . A . B . C . ~ D";
         //    "                  8               +       11    . A . B . C . ~ D";
-        //    "                  8               +            12   . B . C . ~ D";
+        //    "                  8               +             12  . B . C . ~ D";
         //    "                  8               +                 13  . C . ~ D";
-        //    "                  8               +                    14   . ~ D";
-        //    "                  8               +                    14   . ~ D";
+        //    "                  8               +                     14  . ~ D";
         //    ----------------  Execute  ----------------
         //    "                  8               +                    14   .  15";
         //    "                  8               +                         16   ";

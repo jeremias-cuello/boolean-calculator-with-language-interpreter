@@ -4,10 +4,15 @@ class Operant extends Token {
 
     public value: boolean;
 
-    public constructor(symbol: string, value: boolean) {
+    public constructor(symbol: string = "@", value: boolean = false) {
         super();
-        this.symbol = symbol;
-        this.value = value;
+        this.symbol = symbol
+        this.value = value
+
+        // if(typeof symbol != 'undefined') this.symbol = symbol;
+        // else this.symbol = "@";
+        // if(typeof value != 'undefined') this.value = value;
+        // else this.value = false;
     }
 
     public override set symbol(v: string){
